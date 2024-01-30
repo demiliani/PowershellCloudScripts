@@ -1,0 +1,3 @@
+$functionRuntime=@{l="FunctionRuntimeVersion";e={(Get-AzFunctionAppSetting -Name $_.Name -ResourceGroupName $_.ResourceGroupName)["FUNCTIONS_EXTENSION_VERSION"]}}
+
+(Get-AzFunctionApp | Where-Object { $(if ((Get-AzFunctionAppSetting -Name $_.Name -ResourceGroupName $_.ResourceGroupName) -eq $null) {""} else {(Get-AzFunctionAppSetting -Name $_.Name -ResourceGroupName $_.ResourceGroupName)["FUNCTIONS_EXTENSION_VERSION"]}) -ne "~4" } ) | Select-Object Name,ResourceGroupname,$functionRuntime |Format-Table -AutoSize
